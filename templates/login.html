@@ -1,0 +1,28 @@
+{% extends "home.html" %} {% block title %}Login{% endblock %} {% block content%}
+
+
+
+<form action="/login" method="POST">
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"/>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password"  class="form-control" id="password"  name="password" placeholder="Enter password"    />
+  </div>
+
+
+   {%if msg %}
+     <font color="green">       {{msg}} </font> <br><br>
+    {% endif %}
+
+
+    <br />
+  <button type="submit" class="btn btn-primary">Login</button>
+  <div class="nav nav-tabs">
+  <a class="nav-link " href="/forget_pwd">Forget Password</a>
+  <a class="nav-link " href="/admin_login">Admin Login</a>
+    </div>
+
+{% endblock %}

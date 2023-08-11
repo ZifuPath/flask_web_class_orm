@@ -1,0 +1,15 @@
+{% extends "home.html" %} {% block title %}Change Password{% endblock %} {% block content%}
+   {%if msg %}
+     <font color="green">       {{msg}} </font> <br><br>
+    {% endif %}
+<form action="/pwd_check" method="POST">
+  <div class="form-group">
+    <label for="password1">Password</label>
+    <input type="password"  class="form-control" id="password1"  name="password1" placeholder="Enter password"    />
+  </div>
+    <div class="form-group">
+    <label for="password2">Confirm Password</label>
+    <input type="text"  class="form-control" id="password2"  name="password2" placeholder="Confirm password"    />
+  </div>
+   <button type="submit" class="btn btn-primary">submit</button>
+{% endblock %}

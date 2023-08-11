@@ -1,0 +1,20 @@
+{% extends "home.html" %} {% block title %}Login{% endblock %} {% block content%}
+<center> <h2>  Admin Login </h2> </center>
+
+
+<form action="/admin_login" method="POST">
+  <div class="form-group">
+    <label for="username">Admin Username</label>
+    <input type="text" class="form-control" id="username" name="username" placeholder="Enter Admin username"/>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password"  class="form-control" id="password"  name="password" placeholder="Enter password"    />
+  </div>
+
+      {%if msg %}
+     <font color="green">       {{msg}} </font> <br><br>
+    {% endif %}
+    <br />
+    <button type="submit" class="btn btn-primary">Login</button>
+{% endblock %}

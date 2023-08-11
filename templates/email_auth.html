@@ -1,0 +1,37 @@
+{% extends "home.html" %} {% block title %} Email Autherization {% endblock %} {% block content%}
+
+{% if page== 'email_auth' %}
+<center> <h2> Email Registration </h2>
+ {%if user %}
+     <font color="green">       {{user['username']}} </font> <br><br>
+    {% endif %}
+
+
+<form action="/email_auth" method="post">
+ {%if msg %}
+     <font color="green">       {{msg }} </font> <br><br>
+    {% endif %}
+
+Enter OTP : <input type="text" placeholder="ENTER OTP SENT TO " id="OTP" name ='OTP'>
+        <input type="submit" class="btn btn-success"><br><br>
+    </center>
+
+{% elif page=='change_pwd' %}
+
+    <center> <h2> Change Password </h2>
+ {%if user %}
+     <font color="green">       {{user['username']}} </font> <br><br>
+    {% endif %}
+
+
+<form action="/change_pwd" method="post">
+ {%if msg %}
+     <font color="green">       {{msg }} </font> <br><br>
+    {% endif %}
+
+Enter OTP : <input type="text" placeholder="ENTER OTP SENT TO " id="OTP" name ='OTP'>
+        <input type="submit" class="btn btn-success"><br><br>
+    </center>
+
+{% endif %}
+{% endblock %}

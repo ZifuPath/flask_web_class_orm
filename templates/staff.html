@@ -1,0 +1,60 @@
+{% extends "home.html" %} {% block title %}Staff{% endblock %} {% block content%}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<div class="container">
+            	{% if batchlist %}
+					<table class="table">
+					<thead class="thead-dark">
+						<th scope="col">Batch Id</th>
+						<th scope="col">Batch course </th>
+						<th scope="col">Batch time </th>
+
+					</thead>
+					<tbody>
+					{% for batch in batchlist %}
+						<tr>
+						<td >{{batch.batchid}}</td>
+						<td>{{batch.batchcourse}}</td>
+						<td>{{batch.batchtime}}</td>
+
+						<td>
+                        <a href="/staff/batch/user/{{batch.batchid}}">SHOW STUDENT</a>
+						</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+					</table>
+
+
+            	{% endif %}
+	</div>
+
+{% if userlist %}
+					<table class="table">
+					<thead class="thead-dark">
+						<th scope="col">Student Id</th>
+						<th scope="col">Student Firstname </th>
+						<th scope="col">Student Lastname </th>
+						<th scope="col">Student Email </th>
+						<th scope="col"> Student Cour </th>
+
+					</thead>
+					<tbody>
+					{% for user in userlist %}
+						<tr>
+						<td >{{user.userid}}</td>
+						<td>{{user.firstname}}</td>
+						<td>{{user.lastname}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.cour}}</td> </tr>
+					{% endfor %}
+					</tbody>
+					</table>
+
+
+            	{% endif %}
+	</div>
+
+{% endblock %}

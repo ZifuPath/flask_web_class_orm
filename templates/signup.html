@@ -1,0 +1,58 @@
+{% extends "home.html" %} {% block title %}Sign Up{% endblock %} {% block content%}
+
+ {%if msg %}
+     <font color="green">       {{msg }} </font> <br><br>
+    {% endif %}
+<form class="form-inline-row" action="/sign_up" method="post" >
+<div class="panel panel-default">
+  <div class="panel-body">
+
+              <div class="form-group">  <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstname" placeholder="Enter first name" />
+              </div>
+              <div class="form-group">    <label for="lastName">Last Name</label>
+                <input type="text"  class="form-control" id="lastName" name="lastname"
+                placeholder="Enter Last Name" />
+              </div>
+
+             <div class="form-group">    <label for="dob">Date of Birth</label>
+                <input type="date"  class="form-control" id="dob" name="dab"
+                 />
+              </div>
+             <div class="form-group">    <label for="mob">Mobile Number</label>
+                <input type="number"  class="form-control" id="mob" name="mob"
+                placeholder="Enter 10 Digit Number"
+                />
+              </div>
+            <div class="form-group">    <label for="qual">Highest Qualification</label>
+              <select class="form-control" id="qual" name="qual">
+                                <option value="1" > Diploma </option>
+                                <option value="2" > Graduate </option>
+                                <option value="3" > Post Graduate </option>
+
+                                </select>
+            </div>
+         <div class="form-group">    <label for="cour">Course Intrested</label>
+                <select class="form-control" id="cour" name="cour">
+                           <option value="1" >Python </option>
+                                <option value="2" > Java </option>
+                                <option value="3" > CSS </option>
+                                <option value="4" > DotNet </option>
+
+                                </select>
+              </div>
+
+
+        Email id : <input type="email"  name="email" placeholder="Enter Email Address " ><br></br>
+        Password : <input type="password" name="password1"placeholder="Enter password "><br></br>
+        Confirm Password : <input type="password" name="password2" placeholder="Confirm Password " >
+      <!--        Photo : <input type="file"> <br><br>-->
+        <br></br>
+      <input type="submit" class="btn btn-success"><br> <br>
+
+</div>
+</div>
+
+</form>
+
+{% endblock %}

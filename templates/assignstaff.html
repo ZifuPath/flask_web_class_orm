@@ -1,0 +1,42 @@
+{% extends "home.html" %} {% block title %}Assign Staff {% endblock %} {% block content%}
+<form class="form-inline-row" action="/admin/staff/assign/" method="post" >
+
+<div class="container">
+
+   {% if batchlist %}
+        <table class="table">
+                <thead class="thead-dark">
+                     <th scope="col">batch Id</th>
+                     <th scope="col">batch course </th>
+                    <th scope="col">batch time </th>
+                    <th scope="col">assign batch </th>
+                </thead>
+
+        <tbody>
+            {% for batch in batchlist %}
+                <tr>
+                    <td >{{batch.batchid}}</td>
+                    <td>{{batch.batchcourse}}</td>
+                    <td>{{batch.batchtime}}</td>
+                    <td>
+                        <input class="form-control" id="bid" name="bid" type="checkbox" value="{{batch.batchid}}" ><br></br>
+
+                    </td>
+                </tr>
+
+
+            {% endfor %}
+
+        </tbody>
+
+        </table>
+<br> <button type="submit" class="btn btn-primary">Assign staff</button>
+             </form>
+    {% else %}
+        <h3>  </h3>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

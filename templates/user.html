@@ -1,0 +1,70 @@
+{% extends "home.html" %} {% block title %}Staff{% endblock %} {% block content%}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<h1> Welcome {{ user }}</h1>
+
+              <a href="/user/detail" class="w3-bar-item w3-button">Show Details </a>
+
+{% if student %}
+
+
+    <div class="panel panel-default">
+  <div class="panel-body">
+
+
+        Firstname  :  {{student.firstname}}<br></br>
+        Lastname  :  {{student.lastname}}<br></br>
+        dob : {{student.dob}}<br></br>
+        mob  :  {{student.mob}}<br></br>
+        Qualification :  {{student.qual}} <br></br>
+        Course Intersted : {{student.cour}}<br></br>
+        Email id : {{student.email}}<br></br>
+        Batch Number : {{student.b_id}} <br></br>
+
+    <a href="/user/edit/" class="w3-bar-item w3-button">Edit </a>
+</div>
+    </div>
+{% elif page =='edit' %}
+    <form class="form-inline-row" action="/admin/user/edit" method="post" >
+            <div class="panel panel-default">
+            <div class="panel-body">
+            <div class="form-group">  <label for="firstName">First Name</label>
+                 <input type="text" class="form-control" id="firstName" name="firstname" value="{{dummy.firstname}}" />
+            </div>
+            <div class="form-group">    <label for="lastName">Last Name</label>
+                <input type="text"  class="form-control" id="lastName" name="lastname"
+                value="{{dummy.lastname}}" />
+            </div>
+            <div  class="form-group">    <label for="dob">Date of Birth</label>
+				<input type="date"  class="form-control" id="dob" name="dob">
+            </div>
+            <div class="form-group">    <label for="mob">Mobile Number</label>
+				<input type="number"  class="form-control" id="mob" name="mob"
+				value="{{dummy.mob}}"
+				/>
+			</div>
+			<div class="form-group">    <label for="qual">Highest Qualification</label>
+                    <select class="form-control" id="qual" name="qual">
+                                <option value="DIPLOMA" > Diploma </option>
+                                <option value="GRADUATE" > Graduate </option>
+                                <option value="POSTGRADUATE" > Post Graduate </option>
+					</select>
+			</div>
+			<div class="form-group">    <label for="cour">Course Intrested</label>
+					<select class="form-control" id="cour" name="cour">
+								<option value="PYTHON" >Python </option>
+                                <option value="JAVA" > Java </option>
+                                <option value="CSS" > CSS </option>
+                                <option value="AWS" > AWS </option>
+                                </select>
+            </div>
+                         <input type="submit" class="btn btn-success"><br> Edit  <br>
+
+            </div>
+            </div>
+
+		</form>
+{% endif %}
+
+{% endblock %}

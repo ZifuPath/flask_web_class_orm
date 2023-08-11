@@ -1,0 +1,11 @@
+{% extends "home.html" %} {% block title %}Forget Password{% endblock %} {% block content%}
+   {%if msg %}
+     <font color="green">       {{msg}} </font> <br><br>
+    {% endif %}
+<form action="/forget_pwd" method="POST">
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"/>
+  </div>
+    <button type="submit" class="btn btn-primary">Generate OTP</button>
+{% endblock %}

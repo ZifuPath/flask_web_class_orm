@@ -1,0 +1,417 @@
+{% extends "home.html" %} {% block title %}Admin{% endblock %} {% block content%}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+{% if page=='admin' %}
+        <div class="w3-bar w3-light-gery">
+            <div class="w3-dropdown-hover">
+            <button class="w3-button">Staff</button>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+              <a href="/admin/staff/show_all" class="w3-bar-item w3-button">Show all </a>
+              <a href="/admin/staff/add" class="w3-bar-item w3-button">Add</a>
+
+            </div>
+            </div>
+            </div>
+        <div class="container">
+            {% if stafflist %}
+					<table class="table">
+						<thead class="thead-dark">
+							<th scope="col">Staff Id</th>
+							<th scope="col">Staff staffname </th>
+							<th scope="col">Staff Batchname  </th>
+						</thead>
+
+						<tbody>
+							{% for staff in stafflist %}
+								<tr>
+								<td >{{staff.staffid}}</td>
+								<td>{{staff.staffname}}</td>
+								<td>{{staff.batchrefs}}</td>
+								<td>
+									<a href="/admin/staff/edit/{{staff.staffid}}">EDIT</a>
+									<a href="/admin/staff/delete/{{staff.staffid}}">DELETE</a>
+									<a href="/admin/staff/assign/{{staff.staffid}}">ASSIGN</a>
+								</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+
+						</table>
+
+            {% endif %}
+
+		</div>
+<br><br>
+<!--BATCH -->
+			<div class="w3-bar w3-light-gery">
+			<div class="w3-dropdown-hover">
+				<button class="w3-button">BATCH</button>
+			<div class="w3-dropdown-content w3-bar-block w3-card-4">
+				<a href="/admin/batch/add" class="w3-bar-item w3-button">Add</a>
+				<a href="/admin/batch/show_all" class="w3-bar-item w3-button">Show all</a>
+
+
+			</div>
+			</div>
+			</div>
+
+<!--IF USER LIST IS PRESENT THEN OPERATION-->
+			<div class="container">
+            {% if batchlist %}
+					<table class="table">
+					<thead class="thead-dark">
+						<th scope="col">Batch Id</th>
+						<th scope="col">Batch course </th>
+						<th scope="col">Batch time </th>
+						<th scope="col">Batch staff </th>
+					</thead>
+					<tbody>
+				{% for batch in batchlist %}
+						<tr>
+						<td >{{batch.batchid}}</td>
+						<td>{{batch.batchcourse}}</td>
+						<td>{{batch.batchtime}}</td>
+						<td>{{batch.staffref.staffname}}</td>
+						<td>
+                        <a href="/admin/batch/edit/{{batch.batchid}}">EDIT</a>
+                        <a href="/admin/batch/delete/{{batch.batchid}}">DELETE</a>
+                        <a href="/admin/batch/assign/{{batch.batchid}}">Assign Student</a>
+						</td>
+						</tr>
+				{% endfor %}
+					</tbody>
+
+					</table>
+
+            {% endif %}
+
+			</div>
+<br><br>
+<!--USER CLASS -->
+			<div class="w3-bar w3-light-gery">
+			<div class="w3-dropdown-hover">
+				<button class="w3-button">Student</button>
+			<div class="w3-dropdown-content w3-bar-block w3-card-4">
+				<a href="/admin/user/add" class="w3-bar-item w3-button">Add</a>
+				<a href="/admin/user/show_user" class="w3-bar-item w3-button">Show all </a>
+			</div>
+			</div>
+			</div>
+
+<!--IF USER LIST IS PRESENT THEN THIS  OPERATION-->
+			<div class="container">
+            {% if userlist %}
+                <table class="table">
+					<thead class="thead-dark">
+						 <th scope="col">User Id</th>
+						 <th scope="col">User firstname</th>
+						 <th scope="col">User Lastname</th>
+						 <th scope="col">User Date of Birth </th>
+						 <th scope="col">User Mobile</th>
+						 <th scope="col">User Email</th>
+						 <th scope="col">User Qualification </th>
+						 <th scope="col">User course </th>
+						<th scope="col">User Batch </th>
+					</thead>
+
+					<tbody>
+					{% for user in userlist.items %}
+						<tr>
+						<td >{{user.userid}}</td>
+						<td>{{user.firstname}}</td>
+						<td>{{user.lastname}}</td>
+						<td>{{user.dob}}</td>
+						<td>{{user.mob}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.qual}}</td>
+						<td>{{user.cour}}</td>
+						<td>{{user.batchref.batchid}}</td>
+						<td>
+							<a class ='btn btn-info mb-4' href="/admin/user/edit/{{user.userid}}">EDIT</a>
+							<a class ='btn btn-info mb-4' href="/admin/user/delete/{{user.userid}}">DELETE</a>
+                            <a class ='btn btn-info mb-4' href="/admin/user/status/{{user.userid}}">CHANGE STATUS</a>
+
+						</td>
+						</tr>
+
+					{% endfor %}
+
+				</tbody>
+				</table>
+				{% for page_num in userlist.iter_pages(left_edge=5,right_edge = 1, left_current =1,right_current = 5) %}
+					{% if page_num %}
+						{%if userlist.page== page_num %}
+							<a class ='btn btn-info mb-4' href="{{ url_for('show_user',page= page_num)}}"> {{page_num}} </a>
+						{% else %}
+							<a class ='btn btn-outline-info mb-4' href="{{ url_for('show_user',page= page_num)}}"> {{page_num}} </a>
+						{% endif%}
+					{% else %}
+
+					{% endif %}
+				{% endfor %}
+            {% endif %}
+            </div>
+
+{% elif page == 'addstaff' %}
+        <form action="/admin/staff/add" method="POST">
+			<div class="form-group">
+				<label for="username">Staff Username</label>
+				<input type="text" class="form-control" name="username" value = "{{user.staffname}}" placeholder="Enter staff username"/>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password"  class="form-control" name="password" value = "{{ user.staffpwd }}" placeholder="Enter password"    />
+			</div>
+
+				{%if msg %}
+					<font color="green">       {{msg}} </font> <br><br>
+				{% endif %}
+				<br />
+                <button type="submit" class="btn btn-primary">Add Staff</button>
+        </form>
+
+{% elif page == 'updatestaff' %}
+        <form action="/admin/staff/edit/" method="POST">
+			<div class="form-group">
+				<label for="username">Staff Username</label>
+				<input type="text" class="form-control" id="username" name="username" value = "{{user.staffname}}" placeholder="Enter staff username"/>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password"  class="form-control" id="password"  name="password" value = "{{ user.staffpwd }}" placeholder="Enter password"    />
+			</div>
+
+				{%if msg %}
+					<font color="green">       {{msg}} </font> <br><br>
+				{% endif %}
+				<br />
+					<button type="submit" class="btn btn-primary">edit Staff</button>
+        </form>
+
+{% elif page == 'assignstaff' %}
+
+			<div class="container">
+				{% if batchlist %}
+					<table class="table">
+					<thead class="thead-dark">
+						<th scope="col">batch Id</th>
+						<th scope="col">batch course </th>
+						<th scope="col">batch time </th>
+						<th scope="col">assign batch </th>
+					</thead>
+					<tbody>
+					{% for batch in batchlist %}
+						<tr>
+						<td >{{batch.batchid}}</td>
+						<td>{{batch.batchcourse}}</td>
+						<td>{{batch.batchtime}}</td>
+						<td> <form action="/admin/staff/assign/" method="POST">
+							<input class="form-control" id="bid" name="bid" type="checkbox" value="{{batch.batchid}}" >
+						</td>
+						</tr>
+
+
+				{% endfor %}
+					</tbody>
+					</table>
+					<br> <button type="submit" class="btn btn-primary">Assign Batch</button>
+							</form>
+
+
+			{% endif %}
+
+
+{% elif page == 'addbatch' %}
+        <form action="/admin/batch/add" method="POST">
+			<div class="form-group">
+				<label for="batchcourse">Batch course</label>
+				<input type="text" class="form-control" id="batchcourse" name="batchcourse" value = "{{user.batchcourse}}" placeholder="Enter Batch Course"/>
+			</div>
+			<div class="form-group">
+				<label for="batchtime">Batch Time</label>
+				<input type="text" class="form-control" id="batchtime" name="batchtime" value = "{{user.batchtime}}" placeholder="Enter Batch Time"/>
+			</div>
+
+				{% if msg %}
+					<font color="green">       {{msg}} </font> <br><br>
+				{% endif %}
+					<br />
+						<button type="submit" class="btn btn-primary">Add Batch</button>
+		</form>
+
+{% elif page == 'editbatch' %}
+        <form action="/admin/batch/edit/" method="POST">
+            <div class="form-group">
+                <label for="batchcourse">Batch course</label>
+                <input type="text" class="form-control" id="course" name="batchcourse" value = "{{user.batchcourse}}" placeholder="Enter Batch Course"/>
+            </div>
+            <div class="form-group">
+                <label for="batchtime">Batch Time</label>
+                <input type="text" class="form-control" id="time" name="batchtime" value = "{{user.batchtime}}" placeholder="Enter Batch Time"/>
+            </div>
+
+				{%if msg %}
+					<font color="green">       {{msg}} </font> <br><br>
+				{% endif %}
+					<br />
+						<button type="submit" class="btn btn-primary">edit Batch</button>
+        </form>
+{% elif page == 'assignbatch' %}
+
+            <div class="container">
+				{% if userlist %}
+
+					<table class="table">
+					<thead class="thead-dark">
+						<th scope="col">Student Id</th>
+						<th scope="col">Student Firstname</th>
+						<th scope="col">Student last name </th>
+                        <th scope="col">Student Course </th>
+						<th scope="col">Batch allotted </th>
+						<th scope="col">Select Student </th>
+					</thead>
+					<tbody>
+					{% for user in userlist %}
+						    <tr>
+							<td >{{user.userid}}</td>
+							<td>{{user.firstname}}</td>
+							<td>{{user.lastname}}</td>
+                                <td>{{user.cour}}</td>
+								<td>{{user.batchref}}</td>
+							<td> <form action="/admin/batch/assign/" method="POST">
+								<input class="form-control" id="sid" name="sid" type="checkbox" value="{{user.userid}}" ><br></br>
+
+                            </td>
+						    </tr>
+					{% endfor %}
+					</tbody>
+					</table>
+					<br> <button type="submit" class="btn btn-primary">Assign Batch</button>
+							</form>
+
+
+
+				{% endif %}
+
+{% elif page == 'adduser' %}
+
+        <form class="form-inline-row" action="/admin/user/add" method="post" >
+            <div class="panel panel-default">
+            <div class="panel-body">
+            <div class="form-group">  <label for="firstName">First Name</label>
+                 <input type="text" class="form-control" name="firstname" placeholder="Enter first name" />
+            </div>
+            <div class="form-group">    <label for="lastName">Last Name</label>
+                <input type="text"  class="form-control"  name="lastname"
+                placeholder="Enter Last Name" />
+            </div>
+            <div class="form-group">    <label for="dob">Date of Birth</label>
+				<input type="date"  class="form-control"  name="dob">
+            </div>
+            <div class="form-group">    <label for="mob">Mobile Number</label>
+				<input type="number"  class="form-control"  name="mob"
+				placeholder="Enter 10 Digit Number"
+				/>
+			</div>
+			<div class="form-group">    <label for="qual">Highest Qualification</label>
+                    <select class="form-control"  name="qual">
+                                <option value="DIPLOMA" > Diploma </option>
+                                <option value="GRADUATE" > Graduate </option>
+                                <option value="POSTGRADUATE" > Post Graduate </option>
+					</select>
+			</div>
+			<div class="form-group">    <label for="cour">Course Intrested</label>
+					<select class="form-control"  name="cour">
+								<option value="PYTHON" >Python </option>
+                                <option value="JAVA" > Java </option>
+                                <option value="CSS" > CSS </option>
+                                <option value="AWS" > AWS </option>
+                                </select>
+            </div>
+
+
+					Email id : <input type="email"  name="email" placeholder="Enter Email Address " ><br></br>
+                    Password : <input type="password" name="password" placeholder="Enter password "><br></br>
+      <!--          Photo : <input type="file"> <br><br>-->
+                    <br></br>
+                    <input type="submit" class="btn btn-success"><br> Add Student <br>
+
+            </div>
+            </div>
+
+		</form>
+{% elif page == 'edituser' %}
+
+                <form class="form-inline-row" action="/admin/user/edit" method="post" >
+            <div class="panel panel-default">
+            <div class="panel-body">
+            <div class="form-group">  <label for="firstName">First Name</label>
+                 <input type="text" class="form-control" id="firstName" name="firstname" value="{{dummy.firstname}}" />
+            </div>
+            <div class="form-group">    <label for="lastName">Last Name</label>
+                <input type="text"  class="form-control" id="lastName" name="lastname"
+                value="{{dummy.lastname}}" />
+            </div>
+            <div  class="form-group">    <label for="dob">Date of Birth</label>
+				<input type="date"  class="form-control" id="dob" name="dob">
+            </div>
+            <div class="form-group">    <label for="mob">Mobile Number</label>
+				<input type="number"  class="form-control" id="mob" name="mob"
+				value="{{dummy.mob}}"
+				/>
+			</div>
+			<div class="form-group">    <label for="qual">Highest Qualification</label>
+                    <select class="form-control" id="qual" name="qual">
+                                <option value="DIPLOMA" > Diploma </option>
+                                <option value="GRADUATE" > Graduate </option>
+                                <option value="POSTGRADUATE" > Post Graduate </option>
+					</select>
+			</div>
+			<div class="form-group">    <label for="cour">Course Intrested</label>
+					<select class="form-control" id="cour" name="cour">
+								<option value="PYTHON" >Python </option>
+                                <option value="JAVA" > Java </option>
+                                <option value="CSS" > CSS </option>
+                                <option value="AWS" > AWS </option>
+                                </select>
+            </div>
+
+
+					Email id : <input type="email"  name="email" value="{{dummy.email}}" ><br></br>
+                    Password : <input type="text" name="password"  ><br></br>
+                    <input type="submit" class="btn btn-success"><br> Edit Student <br>
+
+            </div>
+            </div>
+
+		</form>
+
+{% elif page == 'status' %}
+				<form action="/admin/user/status/" method="post" >
+				<div class="form-group">    <label for="status">Course Intrested</label>
+					<select class="form-control" id="Status" name="status">
+								<option value="PENDING" >PENDING </option>
+                                <option value="APPROVED" > APPROVED </option>
+                                <option value="BLOCKED" > BLOCKED </option>
+                                <option value="TEMP SUSPENDED" > TEMP SUSPENDED </option>
+                                </select>
+            </div>
+					<input type="submit" class="btn btn-success"><br>  <br>
+				</form>
+{% elif page == 'staff' %}
+				<div class="w3-bar w3-light-gery">
+            		<div class="w3-dropdown-hover">
+           				 <button class="w3-button">{{session['user_id']}}</button>
+            			<div class="w3-dropdown-content w3-bar-block w3-card-4">
+              			<a href="/staff/show_batch" class="w3-bar-item w3-button">Show batch </a>
+
+
+            		</div>
+            		</div>
+            		</div>
+
+{% endif %}
+
+{% endblock %}

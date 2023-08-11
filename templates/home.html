@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+     <!-- Bootstrap CSS -->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
+<!--    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">-->
+      <script type="text/javascript" >
+
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+    </script>
+    <title>HOME PAGE</title>
+
+</head>
+<body>
+    <center> <title>{% block title %}Home{% endblock %}</title></center>
+
+</body>
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+<!--    <div class="navbar-header">-->
+<!--      <a class="navbar-brand" href="/">HomePage</a>-->
+<!--    </div>-->
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+<!--      <li><a href="#">Page 1</a></li>-->
+<!--      <li><a href="#">Page 2</a></li>-->
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+         {%if user %}
+            {%if role == "admin" %}
+                <li><a href="/admin_home"><span class="glyphicon glyphicon-user"></span> {{ user }} </a></li>
+            {% elif role == "staff" %}
+                <li><a href="/staff_home"><span class="glyphicon glyphicon-user"></span> {{ user }} </a></li>
+            {% else %}
+                <li><a href="/"><span class="glyphicon glyphicon-user"></span> {{ user }} </a></li>
+            {% endif%}
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+
+        {%  else %}
+      <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Sign_Up</a></li>
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
+          {% endif %}
+    </ul>
+  </div>
+</nav>
+ {%if user %}
+ <h1>Welcome {{user.username}} </h1>
+{% else %}
+<h1> </h1>
+   {% endif %}
+
+    <div class="container">{% block content %} {% endblock %}</div>
+
+ {%if msg %}
+     <font color="green">       {{msg }} </font> <br><br>
+    {% endif %}
+</html>
